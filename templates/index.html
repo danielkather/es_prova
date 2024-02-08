@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<aside class="col-4">
+  {% if current_user.is_authenticated %}
+    <h2>Bentornato {{ current_user.nome }}!</h2>
+  {% else %}
+  <h3>Login</h3>
+  <div class="bg-light p-4 border rounded mb-3">
+    <form action="/login" method="POST">
+      <div class="mb-3">
+        <label for="emailInput" class="form-label">Email</label>
+        <input type="text" class="form-control" id="emailInput" aria-describedby="emailHelp" name="email">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+      </div>
+      <div class="mb-3">
+        <label for="passwordInput" class="form-label">Password</label>
+        <input type="password" class="form-control" id="passwordInput" name="password">
+      </div>
+      <small>Non hai ancora un account? <a href="/iscriviti">Registrati</a></small>
+      <button type="submit" class="btn btn-primary mt-3">Accedi</button>
+    </form>
+  </div>
+  {% endif %}
+</aside>
+
+<aside>
+  <form action= "/filtro" method="POST">
+    <label for="scelta">ordina per:</label>
+      <select id="scelta" name="scelta">
+          <option value="prezzomensile asc;">prezzo:crescente</option>
+          <option value="prezzomensile desc;">prezzo:crescente</option>
+          <option value="numerolocali desc;">numero locali:decrescente</option>
+          <option value="numerolocali asc;">numero locali:crescente</option>
+      </select>
+      <button type="submit" class="btn btn-primary mt-3">Applica</button>
+  </form>
+</aside>
+
+<main class="col-8">
+    <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
+        <div class="list-group">
+          {%for casa in case%}
+          <a href="case/{{casa.ID}}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+            
+            <img src="{{ url_for('static', filename=casa.immagine) }}" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+              <div>
+                <h6 class="mb-0">{{casa.TipoCasa}}</h6>
+                <p class="mb-0 opacity-75">{{casa.descrizione}}</p>
+              </div>
+              <small class="opacity-50 text-nowrap">now</small>
+            </div>
+          </a>
+          {%endfor%}
+        </div>
+
+</main>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Profilo{% endblock %}
+{% block content %}
+<title>I TUOI ANNUNCI </title>
+
+{%if utente.tipo == locatore}
+parte locatore
+{%endif%}
+{% endblock %}
